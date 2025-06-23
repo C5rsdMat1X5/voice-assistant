@@ -1,3 +1,4 @@
+import platform
 import pyttsx3
 import speech_recognition as sr
 from .commands import process_voice_command
@@ -8,13 +9,28 @@ engine = pyttsx3.init()
 def initialize_voice_engine():
     voices = engine.getProperty("voices")
     english_voice_id = None
-    for voice in voices:
-        if "en_US" in voice.languages or "en_GB" in voice.languages:
-            if "Samantha" in voice.name or "Karen" in voice.name or "Moira" in voice.name:
-                english_voice_id = voice.id
-                break
-            elif not english_voice_id and "com.apple.voice.compact.en" in voice.id:
-                english_voice_id = voice.id
+    system = platform.system()
+
+    if system == "Darwin":
+        for voice in voices:
+            if "en_US" in voice.languages or "en_GB" in voice.languages:
+                if "Samantha" in voice.name or "Karen" in voice.name or "Moira" in voice.name:
+                    english_voice_id = voice.id
+                    break
+                elif not english_voice_id and "com.apple.voice.compact.en" in voice.id:
+                    english_voice_id = voice.id
+    elif system == "Windows":
+        for voice in voices:
+            if "en" in voice.languages or "English" in voice.name:
+                if "Zira" in voice.name or "David" in voice.name:
+                    english_voice_id = voice.id
+                    break
+        if not english_voice_id and voices:
+            english_voice_id = voices[0].id
+    else:
+        if voices:
+            english_voice_id = voices[0].id
+
     if english_voice_id:
         print(f"Using English voice: {english_voice_id}")
         engine.setProperty("voice", english_voice_id)

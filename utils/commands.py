@@ -16,19 +16,12 @@ from .gemini import query_gemini
 from .speaker import speak_text
 
 command_actions = {
-    "open browser": lambda: subprocess.run(["open", "-a", "Zen"]),
     "hey robot": lambda: speak_text("What's up?"),
     "exit": lambda: (speak_text("See you next time!"), sys.exit()),
-    "go back": lambda: subprocess.run(["open", "-a", "Visual Studio Code"]),
-    "open spotify": lambda: subprocess.run(["open", "-a", "Spotify"]),
     "answer a question": lambda query=None: speak_text(query_gemini(query)),
     "what is": lambda query=None: speak_text(query_gemini(query)),
     "list of commands": lambda: speak_text(
         "Available commands are: " + ", ".join(command_actions.keys())
-    ),
-    "open calculator": lambda: subprocess.run(["open", "-a", "Calculator"]),
-    "show desktop": lambda: subprocess.run(
-        ["osascript", "-e", 'tell application "Finder" to reveal desktop']
     ),
     "hello": lambda: speak_text("Hello, how can I help you?"),
     "current time": lambda: speak_text(
@@ -41,9 +34,6 @@ command_actions = {
         datetime.datetime.now().strftime("The time is %H:%M:%S")
     ),
     "show ip": lambda: speak_text(socket.gethostbyname(socket.gethostname())),
-    "empty trash": lambda: subprocess.run(
-        ["osascript", "-e", 'tell app "Finder" to empty the trash']
-    ),
     "memory usage": lambda: speak_text(
         f"Memory usage is {psutil.virtual_memory().percent} percent"
     ),
@@ -53,7 +43,6 @@ command_actions = {
     "cpu usage": lambda: speak_text(
         f"Current CPU usage is {psutil.cpu_percent()} percent"
     ),
-    "show processes": lambda: subprocess.run("top -l 5 | head -n 20", shell=True),
     "uptime": lambda: subprocess.run(["uptime"]),
     "logged users": lambda: subprocess.run(["who"]),
     "current user": lambda: speak_text(f"Current user is {getpass.getuser()}"),
@@ -62,16 +51,10 @@ command_actions = {
         f"Available space: {shutil.disk_usage('/').free // (2**30)} GB"
     ),
     "tell a joke": lambda: speak_text(pyjokes.get_joke("en")),
-    "list home folders": lambda: subprocess.run(["ls", "-la", os.path.expanduser("~")]),
-    "environment variables": lambda: subprocess.run(["printenv"]),
     "open google": lambda: webbrowser.open("https://www.google.com"),
     "search wikipedia": lambda query=None: webbrowser.open(
         "https://en.wikipedia.org/wiki/Special:Search?search="
         + query.replace("search wikipedia", "").strip()
-    ),
-    "lock device": lambda: subprocess.run(["pmset", "sleepnow"]),
-    "screenshot": lambda: subprocess.run(
-        ["screencapture", "-x", os.path.expanduser("~/Desktop/screenshot.png")]
     ),
     "public ip": lambda: speak_text(subprocess.getoutput("curl -s ifconfig.me")),
     "who am i": lambda: speak_text(f"You are logged in as {getpass.getuser()}"),
