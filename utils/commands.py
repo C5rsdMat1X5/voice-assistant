@@ -2,7 +2,6 @@ import operator
 import subprocess
 import psutil
 import socket
-import os
 import shutil
 import webbrowser
 import time
