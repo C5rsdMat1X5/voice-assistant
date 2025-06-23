@@ -135,4 +135,11 @@ This project is free for personal use. Feel free to modify and adapt it as you w
 
 ---
 
+
+## 🧠 Author
+
+Developed by Matías Henríquez.
+
+---
+
 If you want help adding customized multiplatform commands or improving integration, just ask.
