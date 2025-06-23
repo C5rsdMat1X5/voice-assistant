@@ -1,4 +1,4 @@
-echo ".env" >> .gitignore
+.env
 .venv/
 utils/__pycache__/
 __pycache__/
